@@ -32,7 +32,7 @@ y_pred = model.layers[-2].output
 prediction_model = keras.Model(inputs=x, outputs=y_pred)
 
 # Defina as variáveis char_to_num e num_to_char novamente
-df = pd.read_csv("dataset/labels_dividido.csv")
+df = pd.read_csv("dataset/labels.csv")
 all_text = "".join(df['label'].values)
 vocab = sorted(set(all_text))
 char_to_num = keras.layers.StringLookup(vocabulary=list(vocab), mask_token=None)
@@ -60,5 +60,5 @@ def test_image(img_path):
     return pred_text[0]
 
 # Testa uma imagem
-img_path = "img001_1.png"
+img_path = "img_teste2.png"
 print("Texto reconhecido:", test_image(img_path))

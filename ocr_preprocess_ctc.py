@@ -12,14 +12,15 @@ IMG_WIDTH = 128
 IMG_HEIGHT = 32
 BATCH_SIZE = 1
 AUTOTUNE = tf.data.AUTOTUNE
-MAX_LABEL_LENGTH = 16  # Limite fixo de caracteres nas labels
+MAX_LABEL_LENGTH = 12  # Limite fixo de caracteres nas labels
 
 # Carrega e prepara o CSV
-df = pd.read_csv("dataset/labels_dividido.csv")
-df["label"] = df["label"].str.slice(0, MAX_LABEL_LENGTH)  # Trunca labels para no máximo 16 caracteres
+df = pd.read_csv("dataset/labels.csv")  # ou "labels.csv", conforme o nome real
+df["label"] = df["label"].fillna("")  # Evita erro de NaN
+df["label"] = df["label"].str.slice(0, MAX_LABEL_LENGTH)
 
 # Cria vocabulário
-all_text = "".join(df['label'].values)
+all_text = "".join(df["label"].astype(str).values)
 vocab = sorted(set(all_text))
 char_to_num = keras.layers.StringLookup(vocabulary=list(vocab), mask_token=None)
 num_to_char = keras.layers.StringLookup(vocabulary=char_to_num.get_vocabulary(), invert=True)
@@ -37,7 +38,7 @@ def encode_sample(img_path, label):
 
 # Cria o Dataset
 def create_dataset(df):
-    paths = [os.path.join("dataset/imagens", fname) for fname in df['filename']]
+    paths = [os.path.join("dataset/images", fname) for fname in df['filename']]
     labels = df['label'].tolist()
     dataset = tf.data.Dataset.from_tensor_slices((paths, labels))
     dataset = dataset.map(encode_sample, num_parallel_calls=AUTOTUNE)

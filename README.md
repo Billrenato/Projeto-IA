@@ -23,7 +23,7 @@ projeto-Ia-tensorflow/
 │   │   ├── img001.png
 │   │   ├── img002.png
 │   │   └── ...
-│   └── labels_dividido.csv
+│   └── labels.csv
 │
 ├── modelo_ocr.keras      # Modelo treinado salvo
 ├── script_treino.py      # Script principal de treinamento

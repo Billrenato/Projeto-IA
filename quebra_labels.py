@@ -7,7 +7,7 @@ import textwrap
 IMAGEM_DIR = "dataset/imagens"
 LABELS_CSV = "dataset/labels.csv"
 NOVO_CSV = "dataset/labels_dividido.csv"
-MAX_CHARS = 16  # Máximo de caracteres por frase
+MAX_CHARS = 30  # Máximo de caracteres por frase
 
 # Função para dividir texto longo
 def dividir_texto(texto, max_chars):
